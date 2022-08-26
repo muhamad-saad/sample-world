@@ -4,15 +4,17 @@ import { Paper, TextField, Button, CircularProgress, Grid, Link } from '@mui/mat
 import SearchIcon from '@mui/icons-material/Search';
 import { useJsApiLoader, GoogleMap, Autocomplete, DirectionsRenderer } from "@react-google-maps/api";
 import { google } from "../../shared/config"
-import { center, UNITED_STATES_BOUNDS } from "../../shared/utils/constant"
+import { polylineOptions, center, googleMapOptions, getNeuticalMiles } from "../../shared/utils/constant"
 import "./home.css";
-
 
 const Home: React.FC = () => {
     const { isLoaded } = useJsApiLoader({ 
         googleMapsApiKey: google.GOOGLE_MAPS_API_KEY!, 
         libraries: ['places'] 
     })
+    const [map ,setMap] = useState(null)
+    const [origin ,setOrigin]: any = useState(null)
+    const [destination ,setDestination]: any = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null)
     const [details, setDetails] = useState<{ distance: string | undefined, duration: string | undefined }>({ distance: '', duration: '' })
@@ -28,6 +30,18 @@ const Home: React.FC = () => {
             destination: fromRef?.current?.value!,
             travelMode: window.google.maps.TravelMode.DRIVING,
         })
+
+        const flightPlanCoordinates = [
+            { lat: origin.getPlace().geometry.location.lat(), lng: origin.getPlace().geometry.location.lng() },
+            { lat: destination.getPlace().geometry.location.lat(), lng: destination.getPlace().geometry.location.lng() },
+        ];
+        
+        const flightPath = new window.google.maps.Polyline({
+            path: flightPlanCoordinates,
+            ...polylineOptions
+        });
+        
+        flightPath.setMap(map);
         setDirections(results)
         setDetails({ distance: results?.routes[0]?.legs[0]?.distance?.text, duration: results?.routes[0]?.legs[0]?.duration?.text })
         setIsLoading(false)
@@ -55,14 +69,9 @@ const Home: React.FC = () => {
                                 center={center}
                                 zoom={1}
                                 mapContainerStyle={{ width: "100%", height: "100%" }}
-                                options={{
-                                    restriction: {
-                                        latLngBounds: UNITED_STATES_BOUNDS,
-                                        strictBounds: false,
-                                    },
-                                    minZoom: 1,
-                                    maxZoom: 6,
-                                }}
+                                options={googleMapOptions}
+                                onLoad={(map: any) => setMap(map)}
+                                
                             >
                                 {directions && (<DirectionsRenderer directions={directions} />)}
                             </GoogleMap>
@@ -76,12 +85,12 @@ const Home: React.FC = () => {
                                     alignItems="center"
                                 >
                                     <Grid item lg={5} md={5} sm={5} xs={12}>
-                                        <Autocomplete options={{ types: ['airport'], componentRestrictions: { country: "us" } }}>
+                                        <Autocomplete onLoad={(e) => setOrigin(e)} options={{ types: ['airport'], componentRestrictions: { country: "us" } }}>
                                             <TextField id="to" label="To" inputRef={toRef} className="input" />
                                         </Autocomplete>
                                     </Grid>
                                     <Grid item lg={5} md={5} sm={5} xs={12}>
-                                        <Autocomplete options={{ types: ['airport'], componentRestrictions: { country: "us" } }}>
+                                        <Autocomplete onLoad={(e) => setDestination(e)} options={{ types: ['airport'], componentRestrictions: { country: "us" } }}>
                                             <TextField id="from" label="From" inputRef={fromRef} className="input" />
                                         </Autocomplete>
                                     </Grid>
@@ -98,7 +107,7 @@ const Home: React.FC = () => {
                                         Duration: <b>{details?.duration}</b>
                                     </Grid>
                                     <Grid item lg={5} md={5} sm={5} xs={6} className="details">
-                                        Distance: <b>{details?.distance}</b>
+                                        Distance: <b>{getNeuticalMiles(details?.distance!)}</b>
                                     </Grid>
                                     <Grid item lg={2} md={2} sm={2} xs={12} className="hideOnMobile">
                                         <Link variant="body2" onClick={resetRoute} className="link">Reset</Link>
