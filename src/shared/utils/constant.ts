@@ -20,9 +20,9 @@ export const googleMapOptions = {
         strictBounds: false,
     },
     minZoom: 1,
-    maxZoom: 6,
+    maxZoom: 5,
 }
 
 export const getNeuticalMiles = (miles: string) => {
-    return  miles && `${parseFloat(miles) * 0.87} nautical miles`
+    return  miles && `${parseFloat(miles) * 0.87} neutical mile`
 }
