@@ -1,0 +1,18 @@
+:root {
+    --primary: #FCA311;
+    --secondary: #14213D;
+    --grey: #f3f3f3;
+    --secondary-grey: #9E9E9E;
+    --white: #ffffff;
+    --black: #000000;
+    --delete: rgba(199, 0, 0, 0.8);
+    --link: #0062ff;
+
+    --elements-dm: hsl(209, 23%, 22%);
+    --bg-dm: hsl(207, 26%, 17%);
+    --text-dm: hsl(0, 0%, 100%);
+    --text-lm: hsl(200, 15%, 8%);
+    --input-lm: hsl(0, 0%, 52%);
+    --bg-lm: hsl(0, 0%, 98%);
+    --elements-lm: hsl(0, 0%, 100%)
+}

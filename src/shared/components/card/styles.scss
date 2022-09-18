@@ -1,0 +1,20 @@
+.card{
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
+    .title{
+        font-family: "NunitoSans Bold";
+        margin-bottom: 13px;
+    }
+
+    .paragraph{
+        margin-bottom: 4px;
+
+        .subtitle{
+            font-family: "NunitoSans Bold";
+        }
+    
+        .details{
+            color: var(--secondary-grey)
+        }
+    }
+    
+}

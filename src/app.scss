@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import './shared/styles/colors.css';
+
+body {
+	font-family: 'NunitoSans Regular';
+	font-size: 16px;
+    background-color: var(--grey);
+    margin: 0 !important;
+}
+
+.light{
+    background-color: var(--bg-lm);
+    color: var(--text-lm);
+    .navbar{
+        background-color: var(--elements-lm);
+    }
+    .card{
+        background-color: var(--elements-lm);
+        color: var(--text-lm);
+        .paragraph{
+            color: var(--text-lm);
+        }
+    }
+    .searchBox{
+        background-color: var(--elements-lm);
+    }
+    .selectBox{
+        background-color: var(--elements-lm);
+        outline: none !important;
+    }
+}
+
+.dark{
+    background-color: var(--bg-dm);
+    color: var(--text-dm);
+    .navbar{
+        background-color: var(--elements-dm);
+    }
+    .card{
+        background-color: var(--elements-dm);
+        color: var(--text-dm);
+        .paragraph{
+            color: var(--text-dm);
+        }
+    }
+    .searchBox{
+        background-color: var(--elements-dm);
+        color: var(--text-dm);
+        .icon{
+            color: var(--text-dm);
+        }
+        .input{
+            color: var(--text-dm) !important;
+        }
+    }
+    .selectBox{
+        background-color: var(--elements-dm);
+        .input{
+            color: var(--text-dm) !important;
+            svg{
+                color: var(--text-dm) !important;
+            }
+        }
+    }
+
+    .backBtn{
+        background-color: var(--elements-dm);
+        color: var(--text-dm) !important;
+    }
+
+    .countryDetails{
+        color: var(--text-dm) !important;
+        .paragraph{
+            .subtitle{
+                color: var(--text-dm) !important;
+            }
+        }
+        .border{
+            .btn{
+                background-color: var(--elements-dm);
+            }
+        }
+    }
+
+}
